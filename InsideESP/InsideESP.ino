@@ -61,24 +61,3 @@ int readUInt() {
     i += insideSerial.read();
     return i;
 }
-
-void sendSerial(int color) {
-    //mark start
-    insideSerial.write(255);
-
-    sendUInt(color);
-}
-
-void sendFloat(float f) { //3bytes
-    //<0 -> negative, 1 -> positive ; integer part ; first 2 digits part>
-    insideSerial.write(f < 0 ? 0 : 1);
-    insideSerial.write((int)abs(f));
-    insideSerial.write(((int)abs(f * 100)) % 100);
-}
-
-void sendUInt(int i) { //2 bytes
-    //<mod 10000 ; mod 100>
-    i = abs(i);
-    insideSerial.write(i / 100);
-    insideSerial.write(i % 100);
-}

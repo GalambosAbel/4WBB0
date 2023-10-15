@@ -66,41 +66,6 @@ void readKnob() {
     knob = analogRead(KNOBPIN);
 }
 
-
-bool readSerial() {
-    //full message is here, and first symbol is correct
-    //otherwise it just burns first symbol
-    bool read = false;
-    if(insideSerial.available() >= MESSAGELENGTH && insideSerial.read() == STARTSYMBOL) {
-        if(color == 0) {
-            color++;
-            r = readUInt();
-        }else if (color == 1) {
-            color++;
-            g = readUInt();
-        }else if (color == 2) {
-            color = 0;
-            b = readUInt();
-        }
-        read = true;
-    }
-    return read;
-}
-
-float readFloat() {
-    float sign = insideSerial.read() * 2 - 1;
-    float f = (float)insideSerial.read();
-    f += (float)insideSerial.read() / 100.00;
-    f *= sign;
-    return f;
-}
-
-int readUInt() {
-    int i = insideSerial.read() * 100;
-    i += insideSerial.read();
-    return i;
-}
-
 void sendSerial() {
     //mark start
     insideSerial.write(255);

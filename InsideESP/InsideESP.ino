@@ -127,6 +127,8 @@ void setup() {
     front = loadWord();
     back = loadWord(false);
 
+    pinMode(LED_BUILTIN, OUTPUT); // set up LED as output
+
     pinMode(RXPIN, INPUT);
     pinMode(TXPIN, OUTPUT);
 
@@ -172,6 +174,10 @@ void loop() {
 
     unsigned long currentMillis = millis();
     if (currentMillis - previousMillis >= interval && WiFi.status() == WL_CONNECTED) {
+        digitalWrite(LED_BUILTIN, LOW); // set LED to low
+        delay(200); // wait for 200 ms
+        digitalWrite(LED_BUILTIN, HIGH); // set LED to high
+        // save the last time you updated the DHT values
         previousMillis = currentMillis;
 
         // Print info on state:
